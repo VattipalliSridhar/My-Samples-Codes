@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">My Application</string>
+
+
+    <string name="dayFriday">Friday</string>
+    <string name="dayMonday">Monday</string>
+    <string name="daySaturday">Saturday</string>
+    <string name="daySunday">Sunday</string>
+    <string name="dayThursday">Thursday</string>
+    <string name="dayTuesday">Tuesday</string>
+    <string name="dayWednesday">Wednesday</string>
+    <string name="zero">0:00</string>
+</resources>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="_margin_top">25dp</dimen>
+    <dimen name="cardview_compat_inset_shadow">1dp</dimen>
+    <dimen name="cardview_default_elevation">2dp</dimen>
+    <dimen name="cardview_default_radius">2dp</dimen>
+    <dimen name="hgt_wdt">30dp</dimen>
+    <dimen name="home_card_view_height">185dp</dimen>
+    <dimen name="home_card_view_width">164dp</dimen>
+    <dimen name="image_height">35dp</dimen>
+    <dimen name="image_hgt_wdt">175dp</dimen>
+    <dimen name="image_hgt_wdt_1">205dp</dimen>
+    <dimen name="image_margin">75dp</dimen>
+    <dimen name="image_view_margin_top_bottom">10dp</dimen>
+    <dimen name="image_view_width_hgt">130dp</dimen>
+    <dimen name="margin_tp">20dp</dimen>
+
+    <dimen name="text_margin_tp">15dp</dimen>
+    <dimen name="text_size_aboout_us">36sp</dimen>
+    <dimen name="text_size_aboout_us_1">30sp</dimen>
+    <dimen name="text_size_fav">22sp</dimen>
+    <dimen name="text_size_full_screen">16sp</dimen>
+    <dimen name="text_size_nav">14sp</dimen>
+    <dimen name="text_size_setting">18sp</dimen>
+    <dimen name="text_size_splash">46sp</dimen>
+    <dimen name="view_height">1dp</dimen>
+    <dimen name="view_margin">50dp</dimen>
+    <dimen name="view_margin_bottom">5dp</dimen>
+</resources>
