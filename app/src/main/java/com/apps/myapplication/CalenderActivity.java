@@ -3,6 +3,9 @@ package com.apps.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.internal.view.SupportMenu;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.format.DateFormat;
@@ -10,12 +13,18 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.apps.myapplication.api.ApiClient2;
+import com.apps.myapplication.api.RetrofitApis;
 import com.apps.myapplication.database.DbHelper;
 import com.apps.myapplication.model.EventsModel;
 import com.apps.myapplication.model.PanchangamModel;
+import com.apps.myapplication.model.RequestNotificaton;
+import com.apps.myapplication.model.SendNotificationModel;
 import com.apps.myapplication.utils.Golble;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,6 +35,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import okhttp3.ResponseBody;
+import retrofit2.Callback;
 
 public class CalenderActivity extends AppCompatActivity implements CompactCalendarView.CompactCalendarViewListener {
 
@@ -49,6 +61,21 @@ public class CalenderActivity extends AppCompatActivity implements CompactCalend
         setContentView(R.layout.activity_calender);
         this.timeZone = TimeZone.getDefault();
 
+        FirebaseMessaging.getInstance().setAutoInitEnabled(true);
+        FirebaseMessaging.getInstance().subscribeToTopic("Lap");
+        FirebaseMessaging.getInstance().unsubscribeFromTopic("PC");
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Create channel to show notifications.
+            String channelId  = getString(R.string.default_notification_channel_id);
+            String channelName = getString(R.string.default_notification_channel_name);
+            NotificationManager notificationManager =
+                    getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(new NotificationChannel(channelId,
+                    channelName, NotificationManager.IMPORTANCE_LOW));
+        }
+
         this.mDayNumberTV = (TextView) findViewById(R.id.dayNumberTV);
         this.mDayNameTV = (TextView) findViewById(R.id.dayNameTv);
         this.mFestivNameTV = (TextView) findViewById(R.id.festivalNameTV);
@@ -65,6 +92,32 @@ public class CalenderActivity extends AppCompatActivity implements CompactCalend
         compactCalendarView.setListener(this);
 
         addCalenderEvents();
+        sendNotificationToPatner();
+    }
+
+
+    private void sendNotificationToPatner() {
+
+        SendNotificationModel sendNotificationModel = new SendNotificationModel("check", "i miss you");
+        RequestNotificaton requestNotificaton = new RequestNotificaton();
+        requestNotificaton.setSendNotificationModel(sendNotificationModel);
+        //token is id , whom you want to send notification ,
+        requestNotificaton.setToken("to");
+
+        RetrofitApis apiService =  ApiClient2.getClient().create(RetrofitApis.class);
+        retrofit2.Call<ResponseBody> responseBodyCall = apiService.sendChatNotification(requestNotificaton);
+
+        responseBodyCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(retrofit2.Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                Log.d("kkkk","done");
+            }
+
+            @Override
+            public void onFailure(retrofit2.Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 
     private void addCalenderEvents() {
