@@ -47,6 +47,7 @@ public class MyFirebaseInstanceIDService extends FirebaseMessagingService {
 
     private void sendNotification(String messageBody, String title) {
 
+        int NOTIFICATION_ID = 1;
         Intent intent = new Intent(this, CalenderActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
@@ -67,14 +68,13 @@ public class MyFirebaseInstanceIDService extends FirebaseMessagingService {
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         // Since android Oreo notification channel is needed.
-       /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(channelId,
                     "Channel human readable title",
                     NotificationManager.IMPORTANCE_DEFAULT);
             notificationManager.createNotificationChannel(channel);
         }
-*/
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+      /*  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             @SuppressLint("WrongConstant")
             NotificationChannel notificationChannel = new NotificationChannel(channelId, "My Notifications", NotificationManager.IMPORTANCE_MAX);
             // Configure the notification channel.
@@ -84,8 +84,12 @@ public class MyFirebaseInstanceIDService extends FirebaseMessagingService {
             notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000});
             notificationChannel.enableVibration(true);
             notificationManager.createNotificationChannel(notificationChannel);
+        }*/
+        if (NOTIFICATION_ID > 1073741824) {
+            NOTIFICATION_ID = 0;
         }
-
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        int i = NOTIFICATION_ID;
+        NOTIFICATION_ID = i + 1;
+        notificationManager.notify(( int ) System. currentTimeMillis (), notificationBuilder.build());
     }
 }

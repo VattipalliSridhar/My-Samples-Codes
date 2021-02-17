@@ -62,8 +62,9 @@ public class CalenderActivity extends AppCompatActivity implements CompactCalend
         this.timeZone = TimeZone.getDefault();
 
         FirebaseMessaging.getInstance().setAutoInitEnabled(true);
-        FirebaseMessaging.getInstance().subscribeToTopic("Lap");
+        FirebaseMessaging.getInstance().subscribeToTopic("All");
         FirebaseMessaging.getInstance().unsubscribeFromTopic("PC");
+        FirebaseMessaging.getInstance().unsubscribeFromTopic("Lap");
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
