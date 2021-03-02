@@ -16,11 +16,13 @@ import butterknife.ButterKnife;
 public class ChapterNumbersAdapter extends RecyclerView.Adapter<ChapterNumbersAdapter.ViewDataClasses> {
     private int chaptersCount;
     Context context;
+    private String  language;
 
 
-    public ChapterNumbersAdapter(Context chapterListActivity, int chaptersCount) {
+    public ChapterNumbersAdapter(Context chapterListActivity, int chaptersCount, String lang_type) {
         this.context = chapterListActivity;
         this.chaptersCount = chaptersCount;
+        language = lang_type;
     }
 
     @NonNull
@@ -33,7 +35,16 @@ public class ChapterNumbersAdapter extends RecyclerView.Adapter<ChapterNumbersAd
     @Override
     public void onBindViewHolder(@NonNull ViewDataClasses holder, int position) {
 
-        holder.description.setText(String.valueOf(holder.getAdapterPosition() + 1)+" Chapter");
+        if(language.equals("telugu"))
+        {
+            holder.description.setText(String.valueOf(holder.getAdapterPosition() + 1)+" అధ్యాయం");
+        }if(language.equals("english")){
+            holder.description.setText(String.valueOf(holder.getAdapterPosition() + 1)+" Chapter");
+        }if(language.equals("hindi")){
+            holder.description.setText(String.valueOf(holder.getAdapterPosition() + 1)+" अध्याय");
+        }
+
+
         if(position%2==0)
         {
             holder.layout.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));

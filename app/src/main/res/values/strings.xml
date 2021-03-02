@@ -20,4 +20,7 @@
     <string name="default_notification_channel_name" translatable="true">Weather</string>
 
     <string name="app_open_ads1" translatable="false">ca-app-pub-3940256099942544/3419835294</string>
+
+
+    <string name="ad_attribution">Ad</string>
 </resources>

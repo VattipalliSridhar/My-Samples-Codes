@@ -10,37 +10,53 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.apps.myapplication.bible.BibleBook;
+import com.apps.myapplication.bible.HindiBibleBook;
+import com.apps.myapplication.bible.TeluguBibleBook;
 import com.apps.myapplication.recyclerclick.ItemClickListener;
 import com.apps.myapplication.recyclerclick.RecyclerTouchListener;
-import com.apps.myapplication.utils.Pref;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
-    ChapterAdapter chapterAdapter;
 
+    ChapterAdapter chapterAdapter;
     private List<ChapterModel> list = new ArrayList();
     ChapterModel chapterModel;
     Context context;
+
+    String lang_type = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.context = getApplicationContext();
 
+        lang_type = getIntent().getStringExtra("language");
+
+
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.chapters);
-        JSONArray oldList = BibleBook.getInstance(getApplicationContext()).getOldTestanmentList();
+        JSONArray oldList = null;
+
+        if (lang_type.equals("telugu")) {
+            oldList = TeluguBibleBook.getInstance(getApplicationContext()).getOldTestanmentList();
+        }
+        if (lang_type.equals("hindi")) {
+            oldList = HindiBibleBook.getInstance(getApplicationContext()).getOldTestanmentList();
+        }
+        if (lang_type.equals("english")) {
+            oldList = BibleBook.getInstance(getApplicationContext()).getOldTestanmentList();
+        }
+
         for (int i = 0; i < oldList.length(); i++) {
-             chapterModel = new ChapterModel();
+            chapterModel = new ChapterModel();
             try {
-                Log.d("CHAP", oldList.getJSONObject(i).getString("key") + " "+oldList.getJSONObject(i).getString("val"));
+                Log.d("CHAP", oldList.getJSONObject(i).getString("key") + " " + oldList.getJSONObject(i).getString("val"));
                 chapterModel.setKey(oldList.getJSONObject(i).getString("key"));
                 chapterModel.setVal(oldList.getJSONObject(i).getString("val"));
             } catch (JSONException e) {
@@ -48,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             }
             this.list.add(chapterModel);
         }
-        this.chapterAdapter = new ChapterAdapter(this.list,getApplicationContext(), this);
+        this.chapterAdapter = new ChapterAdapter(this.list, getApplicationContext(), this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerView.setAdapter(this.chapterAdapter);
 
@@ -57,7 +73,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view, int position) {
                 startActivity(new Intent(getApplicationContext(), ChapterListActivity.class)
                         .putExtra("chapter", list.get(position).getKey())
-                        .putExtra("section", position));
+                        .putExtra("section", position)
+                        .putExtra("language", lang_type));
             }
 
             @Override

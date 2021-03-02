@@ -15,17 +15,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SplashScreen"></activity>
+        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity2" />
+        <activity android:name=".SampleAct" />
+        <activity android:name=".SplashScreen" />
         <activity android:name=".CalenderActivity" />
         <activity android:name=".SliderActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".WhatAppsActivity" />
         <activity android:name=".SongListActivity" />
         <activity android:name=".MusicActivity" />
         <activity android:name=".ChapterListActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".OnlineActivity" />
         <activity android:name=".ChapterActivity" />
-        <activity android:name=".SampleAct">
+        <activity android:name=".LanguageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

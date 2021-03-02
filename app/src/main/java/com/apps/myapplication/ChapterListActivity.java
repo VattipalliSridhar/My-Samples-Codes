@@ -10,6 +10,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.apps.myapplication.bible.BibleBook;
+import com.apps.myapplication.bible.HindiBibleBook;
+import com.apps.myapplication.bible.TeluguBibleBook;
 import com.apps.myapplication.recyclerclick.ItemClickListener;
 import com.apps.myapplication.recyclerclick.RecyclerTouchListener;
 
@@ -27,6 +30,8 @@ public class ChapterListActivity extends AppCompatActivity {
 
     public ChapterNumbersAdapter chapterNumbersAdapter;
 
+    String lang_type = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,11 +40,29 @@ public class ChapterListActivity extends AppCompatActivity {
 
 
         chapterName.setText(getIntent().getExtras().getString("chapter"));
+        lang_type = getIntent().getStringExtra("language");
         int intExtra = getIntent().getIntExtra("section", 0);
-        BibleBook instance = BibleBook.getInstance(this);
-        int chaptersCount = instance.getChaptersCount(intExtra);
+        int chaptersCount = 0;
+
+        if (lang_type.equals("telugu")) {
+            TeluguBibleBook teluguBibleBook = TeluguBibleBook.getInstance(this);
+            chaptersCount = teluguBibleBook.getChaptersCount(intExtra);
+        }
+        if (lang_type.equals("hindi")) {
+            HindiBibleBook hindiBibleBook = HindiBibleBook.getInstance(this);
+            chaptersCount = hindiBibleBook.getChaptersCount(intExtra);
+        }
+        if (lang_type.equals("english")) {
+            BibleBook instance = BibleBook.getInstance(this);
+            chaptersCount = instance.getChaptersCount(intExtra);
+        }
+
+
+
+
+
         Log.e("msg", "" + intExtra + "  " + chaptersCount + "  " + getIntent().getExtras().getString("chapter"));
-        chapterNumbersAdapter = new ChapterNumbersAdapter(this, chaptersCount);
+        chapterNumbersAdapter = new ChapterNumbersAdapter(this, chaptersCount,lang_type);
         chapters_list_of_number.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         chapters_list_of_number.setAdapter(this.chapterNumbersAdapter);
         chapters_list_of_number.addOnItemTouchListener(new RecyclerTouchListener(ChapterListActivity.this, chapters_list_of_number, new ItemClickListener() {
@@ -48,7 +71,8 @@ public class ChapterListActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), ChapterActivity.class)
                         .putExtra("chapter", intExtra)
                         .putExtra("chapterName", chapterName.getText().toString().trim())
-                        .putExtra("section", position));
+                        .putExtra("section", position)
+                        .putExtra("language", lang_type));
             }
 
             @Override
