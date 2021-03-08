@@ -58,7 +58,7 @@ public class OnlineActivity extends BaseActivity implements MediaPlayer.OnPrepar
     RecyclerView songListRecyclerView;
 
     private RecyclerSongListAdapter recyclerSongListAdapter;
-
+    String audioUrl = "http://godsongs.weforapps.com/web_app/upload/Vishnusahasranama.wav05-03-2021-10:49:51";
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("ClickableViewAccessibility")
@@ -195,8 +195,8 @@ public class OnlineActivity extends BaseActivity implements MediaPlayer.OnPrepar
                     .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                     .build());
 
-            mediaPlayer.setDataSource(songArrayList.get(position).getSongPath());
-            mediaPlayer.prepare();
+            mediaPlayer.setDataSource(audioUrl);
+            mediaPlayer.prepareAsync();
 
             textTotalTime.setText(milliSecondsToTimer(mediaPlayer.getDuration()));
 
