@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MainActivity3"></activity>
+        <activity android:name=".MainActivity4"></activity>
+        <activity android:name=".MainActivity3" />
         <activity android:name=".LanguageActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".MainActivity2" />
@@ -30,7 +31,7 @@
         <activity android:name=".HomeActivity" />
         <activity android:name=".OnlineActivity" />
         <activity android:name=".ChapterActivity" />
-        <activity android:name=".MainActivity4">
+        <activity android:name=".ConnectivityActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

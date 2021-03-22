@@ -1,7 +1,10 @@
 package com.apps.myapplication.viewmodel;
 
+import android.app.Application;
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -16,11 +19,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SongViewModel extends ViewModel {
+public class SongViewModel extends AndroidViewModel {
     private MutableLiveData<List<SongModel.Song>> songMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<String> messageToShow = new MutableLiveData<>();
     RetrofitApis retrofitApis = RetrofitApis.Factory.create();
     Context mContext;
+
+    public SongViewModel(@NonNull Application application) {
+        super(application);
+    }
 
 
     public void getSongList(Context songListActivity) {
